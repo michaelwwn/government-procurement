@@ -1,0 +1,154 @@
+{
+	"compiler": {
+		"version": "0.8.22+commit.4fc1097e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_bidSubmissionContractAddress",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "rfpId",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "vendor",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "isWinner",
+						"type": "bool"
+					}
+				],
+				"name": "BidEvaluated",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_rfpId",
+						"type": "uint256"
+					}
+				],
+				"name": "evaluateBids",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_rfpId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_vendor",
+						"type": "address"
+					}
+				],
+				"name": "isWinningBid",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "winningBids",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/BidEvaluation.sol": "BidEvaluation"
+		},
+		"evmVersion": "shanghai",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/BidEvaluation.sol": {
+			"keccak256": "0xf6908413b8b4969e76c5515666c018684015139f21a06fd93321891b5ca7ea40",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5299b83803d0bcba4eca86d53b9b23f2ab801426d85e37ef1b829f3cd8a6b31b",
+				"dweb:/ipfs/QmX7zfF3zSukJ8vmn5pmz736XbeTSei7sNd8nbykHSFuxt"
+			]
+		},
+		"contracts/BidSubmission.sol": {
+			"keccak256": "0xbc54835a70a4866476fe7b5bd5b354173660bc032dbf90fb3f41156e10510b93",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a529180dcb1212df32dabb3f14aabb723344c0097979397f944f7057d981ff7c",
+				"dweb:/ipfs/Qmd1ULiPfRoEy8dA3T7AGk363vWKpHHJj1QdtsNVCPWBx2"
+			]
+		},
+		"contracts/RFPIssuance.sol": {
+			"keccak256": "0xb8f83d84190e97f16d8b0da796cbb46ac3c5795aa0d07ac6817a6244aec8eaac",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://892e1f6fbecdce36309c616db7124debbd421ccb20f19eb32bb2e889d0ef96e8",
+				"dweb:/ipfs/QmV6owYY4NH6fXjpmFsyrZRiLLYUyGJfACb5deXo1oXKG7"
+			]
+		}
+	},
+	"version": 1
+}

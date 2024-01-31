@@ -25,18 +25,18 @@ contract ContractExecution {
     }
 
     // Function to formalize a contract
-    function formalizeContract(uint256 _rfpId, uint256 _totalMilestones) public {
-        require(approvalWorkflowContract.getApprovalStatus(_rfpId) == ApprovalWorkflow.ApprovalStatus.Approved, "Bid not approved");
+        function formalizeContract(uint256 _rfpId, uint256 _totalMilestones) public {
+        address approvedVendor = approvalWorkflowContract.getApprovedVendor(_rfpId);
 
         contracts[_rfpId] = Contract({
             rfpId: _rfpId,
-            vendor: approvalWorkflowContract.approvals(_rfpId).vendor,
+            vendor: approvedVendor,
             isActive: true,
             totalMilestones: _totalMilestones,
             milestonesCompleted: 0
         });
 
-        emit ContractCreated(_rfpId, contracts[_rfpId].vendor);
+        emit ContractCreated(_rfpId, approvedVendor);
     }
 
     // Function to mark a milestone as completed

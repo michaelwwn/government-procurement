@@ -1,0 +1,282 @@
+{
+	"compiler": {
+		"version": "0.8.22+commit.4fc1097e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_rfpContractAddress",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "rfpId",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "vendor",
+						"type": "address"
+					}
+				],
+				"name": "BidSubmitted",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "bidsByRFP",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "rfpId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "vendor",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "bidDetails",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "isSubmitted",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "bidsByVendor",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "rfpId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "vendor",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "bidDetails",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "isSubmitted",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_vendor",
+						"type": "address"
+					}
+				],
+				"name": "getBidsByVendor",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "rfpId",
+								"type": "uint256"
+							},
+							{
+								"internalType": "address",
+								"name": "vendor",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "bidDetails",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "timestamp",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "isSubmitted",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct BidSubmission.Bid[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_rfpId",
+						"type": "uint256"
+					}
+				],
+				"name": "getBidsForRFP",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "rfpId",
+								"type": "uint256"
+							},
+							{
+								"internalType": "address",
+								"name": "vendor",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "bidDetails",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "timestamp",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "isSubmitted",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct BidSubmission.Bid[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_rfpId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_bidDetails",
+						"type": "string"
+					}
+				],
+				"name": "submitBid",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/BidSubmission.sol": "BidSubmission"
+		},
+		"evmVersion": "shanghai",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/BidSubmission.sol": {
+			"keccak256": "0xbc54835a70a4866476fe7b5bd5b354173660bc032dbf90fb3f41156e10510b93",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a529180dcb1212df32dabb3f14aabb723344c0097979397f944f7057d981ff7c",
+				"dweb:/ipfs/Qmd1ULiPfRoEy8dA3T7AGk363vWKpHHJj1QdtsNVCPWBx2"
+			]
+		},
+		"contracts/RFPIssuance.sol": {
+			"keccak256": "0xb8f83d84190e97f16d8b0da796cbb46ac3c5795aa0d07ac6817a6244aec8eaac",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://892e1f6fbecdce36309c616db7124debbd421ccb20f19eb32bb2e889d0ef96e8",
+				"dweb:/ipfs/QmV6owYY4NH6fXjpmFsyrZRiLLYUyGJfACb5deXo1oXKG7"
+			]
+		}
+	},
+	"version": 1
+}

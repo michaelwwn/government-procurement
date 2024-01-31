@@ -52,4 +52,9 @@ contract ApprovalWorkflow {
     function getApprovalStatus(uint256 _rfpId) public view returns (ApprovalStatus) {
         return approvals[_rfpId].status;
     }
+
+    function getApprovedVendor(uint256 _rfpId) public view returns (address) {
+        require(approvals[_rfpId].status == ApprovalStatus.Approved, "Bid not approved");
+        return approvals[_rfpId].vendor;
+    }
 }
