@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract VendorRegistration {
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract VendorRegistration is Ownable(msg.sender)  {
 
     struct Vendor {
         string name;
@@ -30,8 +32,7 @@ contract VendorRegistration {
     }
 
     // Function to change the eligibility status of a vendor
-    function changeVendorEligibility(address _vendorAddress, bool _isEligible) public {
-        // Only eligible to be called by the contract owner or an authorized party
+    function changeVendorEligibility(address _vendorAddress, bool _isEligible) public onlyOwner {
         require(vendors[_vendorAddress].isRegistered, "Vendor not registered");
 
         vendors[_vendorAddress].isEligible = _isEligible;

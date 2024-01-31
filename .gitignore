@@ -2,7 +2,7 @@
 node_modules/
 
 # Build artifacts
-artifacts/
+contracts/artifacts/
 build/
 
 # Compiled contract outputs
