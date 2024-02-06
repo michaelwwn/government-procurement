@@ -24,7 +24,7 @@ contract ProcurementMaster {
         address _bidSubmissionAddress,
         address _bidEvaluationAddress,
         address _approvalWorkflowAddress,
-        address _contractExecutionAddress
+        address payable _contractExecutionAddress
     ) {
         vendorRegistrationContract = VendorRegistration(_vendorRegistrationAddress);
         rfpIssuanceContract = RFPIssuance(_rfpIssuanceAddress);
@@ -60,8 +60,8 @@ contract ProcurementMaster {
     }
 
     // Function to execute a contract after bid approval
-    function executeContract(uint256 _rfpId, uint256 _totalMilestones) public {
-        contractExecutionContract.formalizeContract(_rfpId, _totalMilestones);
+    function executeContract(uint256 _rfpId, uint256 _totalMilestones, uint256 _milestonePaymentAmount) public {
+        contractExecutionContract.formalizeContract(_rfpId, _totalMilestones, _milestonePaymentAmount);
     }
 
     // Function to retrieve contract details
