@@ -39,8 +39,6 @@ contract ProcurementMaster {
         contractExecutionContract = ContractExecution(_contractExecutionAddress);
     }
 
-    /// @dev removed deploy function contract as we do not need to deploy the vendor registration contract in here as all other contracts will deployed independently
-
     // Function to issue a new RFP
     function createRFP(string memory _title, string memory _description, uint256 _deadline) public {
         rfpIssuanceContract.issueRFP(_title, _description, _deadline);
