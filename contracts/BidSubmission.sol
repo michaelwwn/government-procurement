@@ -2,10 +2,11 @@
 pragma solidity ^0.8.0;
 
 import "./RFPIssuance.sol"; // Import the RFPIssuance contract if it's in a separate file
+import "./VendorRegistration.sol"; // Import the VendorRegistration contract if it's in a seperate file
 
 contract BidSubmission {
     RFPIssuance rfpContract; // Instance of the RFPIssuance contract
-
+    VendorRegistration vendorRegistrationContract;
     struct Bid {
         uint256 rfpId;
         address vendor;
@@ -19,8 +20,9 @@ contract BidSubmission {
 
     event BidSubmitted(uint256 indexed rfpId, address indexed vendor);
 
-    constructor(address _rfpContractAddress) {
+    constructor(address _rfpContractAddress, address _vendorRegistrationContractAddress) {
         rfpContract = RFPIssuance(_rfpContractAddress);
+        vendorRegistrationContract = VendorRegistration(_vendorRegistrationContractAddress);
     }
 
     // Function to submit a bid
@@ -28,6 +30,9 @@ contract BidSubmission {
         // Ensure the RFP exists and is active
         require(rfpContract.getRFP(_rfpId).isActive, "RFP is not active or does not exist");
         require(block.timestamp <= rfpContract.getRFP(_rfpId).deadline, "The deadline for this RFP has passed");
+        // Ensure that the vendor has registered and is eligible
+        require(vendorRegistrationContract.isVendorEligible(msg.sender), "Vendor is not eligible");
+        require(vendorRegistrationContract.isVendorRegistered(msg.sender), "Vendor is not registered");
 
         Bid memory newBid = Bid({
             rfpId: _rfpId,
