@@ -1,4 +1,4 @@
-# Smart Contracts Implementation for Procurement
+# Smart Contracts Implementation for Procurement Procedures (Open Tenders)
 
 ## Background
 This project is a part of the MH6814 Blockchain II group project assignment. Our team has explored the feasibility of replacing the traditional procurement process used by the Singapore Government with a blockchain-based smart contract system. Our aim is to enhance transparency, efficiency, and automation in the procurement process using Ethereum blockchain technology.
