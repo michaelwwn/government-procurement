@@ -1,5 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
+/** 
+    @title Master Government Procurement contract
+    @notice This contract manages the overarching workflow between all the other contracts for the
+    whole procurement process.
+*/
 
 import "./VendorRegistration.sol";
 import "./RFPIssuance.sol";
@@ -9,7 +14,7 @@ import "./ApprovalWorkflow.sol";
 import "./ContractExecution.sol";
 
 contract ProcurementMaster {
-    // Contract instances
+    /// @dev Contract instance intializations of the other smart contracts
     VendorRegistration public vendorRegistrationContract;
     RFPIssuance public rfpIssuanceContract;
     BidSubmission public bidSubmissionContract;
@@ -17,7 +22,7 @@ contract ProcurementMaster {
     ApprovalWorkflow public approvalWorkflowContract;
     ContractExecution public contractExecutionContract;
 
-    // Constructor with addresses of other contracts
+    /// @dev Constructor with addresses of other contracts
     constructor(
         address _vendorRegistrationAddress,
         address _rfpIssuanceAddress,
@@ -32,11 +37,6 @@ contract ProcurementMaster {
         bidEvaluationContract = BidEvaluation(_bidEvaluationAddress);
         approvalWorkflowContract = ApprovalWorkflow(_approvalWorkflowAddress);
         contractExecutionContract = ContractExecution(_contractExecutionAddress);
-    }
-
-    // Function to deploy a new Vendor Registration Contract
-    function createVendorRegistration() public {
-        // Logic to deploy a new VendorRegistration contract
     }
 
     // Function to issue a new RFP
