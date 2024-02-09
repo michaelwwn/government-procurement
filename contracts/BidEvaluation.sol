@@ -29,18 +29,32 @@ contract BidEvaluation {
     // Function to evaluate bids for a specific RFP
     function evaluateBids(uint256 _rfpId) public {
         BidSubmission.Bid[] memory bids = bidSubmissionContract.getBidsForRFP(_rfpId);
+        uint256 lowestPrice = type(uint256).max;
+        address winningVendor = address(0);
 
-        // Placeholder for evaluation logic
-        // We check and find the first bid in the array that has an eligible vendor if not, we move on the the next
         for (uint i = 0; i < bids.length; i++) {
-            // Check if each vendor is eligible before proceeding with evaluation
-            if (vendorRegistrationContract.isVendorEligible(bids[i].vendor)) {
-                // In a real implementation, this would involve complex logic
-                // For simplicity, we are just selecting the first bid that is eligible as the winner
-                winningBids[_rfpId] = bids[i].vendor;
-                emit BidEvaluated(_rfpId, bids[i].vendor, true);
-                break;
+            if (!vendorRegistrationContract.isVendorEligible(bids[i].vendor)) {
+                continue;
             }
+            // Assuming bidDetails is "price,qualityScore, ESGScore" i.e. 100,90,90
+            string[] memory details = splitBidDetails(bids[i].bidDetails);
+            uint256 price = parseUint(details[0]);
+            uint256 qualityScore = parseUint(details[1]);
+            uint256 ESGScore = parseUint(details[2]);
+
+            if (vendorRegistrationContract.isVendorEligible(bids[i].vendor) 
+                && price < lowestPrice 
+                && qualityScore >= 70
+                && ESGScore >= 90
+            ) {
+                lowestPrice = price;
+                winningVendor = bids[i].vendor;
+            }
+        }
+
+        if(winningVendor != address(0)) {
+            winningBids[_rfpId] = winningVendor;
+            emit BidEvaluated(_rfpId, winningVendor, true);
         }
     }
 
