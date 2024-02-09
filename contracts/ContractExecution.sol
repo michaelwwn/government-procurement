@@ -55,7 +55,7 @@ contract ContractExecution {
     }
 
     // Function to mark a milestone as completed and transfer funds
-    function completeMilestone(uint256 _rfpId) public {
+    function completeMilestone(uint256 _rfpId) public onlyOwner{
         Contract storage contractToUpdate = contracts[_rfpId];
         require(contractToUpdate.isActive, "Contract is not active");
         require(contractToUpdate.milestonesCompleted < contractToUpdate.totalMilestones, "All milestones already completed");
