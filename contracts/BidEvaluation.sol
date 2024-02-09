@@ -33,9 +33,6 @@ contract BidEvaluation {
         address winningVendor = address(0);
 
         for (uint i = 0; i < bids.length; i++) {
-            if (!vendorRegistrationContract.isVendorEligible(bids[i].vendor)) {
-                continue;
-            }
             // Assuming bidDetails is "price,qualityScore, ESGScore" i.e. 100,90,90
             string[] memory details = splitBidDetails(bids[i].bidDetails);
             uint256 price = parseUint(details[0]);
