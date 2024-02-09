@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./BidEvaluation.sol"; // Import the BidEvaluation contract if it's in a separate file
+import "@openzeppelin/contracts/access/AccessControl.sol";
+import "./BidEvaluation.sol"; // Ensure this import path is correct for your project
 
-contract ApprovalWorkflow {
+contract ApprovalWorkflow is AccessControl {
     BidEvaluation bidEvaluationContract; // Instance of the BidEvaluation contract
-    address public owner;
-    mapping(address => bool) public whitelist; // Tracks whitelisted officer addresses
+    
+    bytes32 public constant OFFICER_ROLE = keccak256("OFFICER_ROLE");
     
     enum ApprovalStatus { Pending, Approved, Rejected }
     struct BidApproval {
@@ -29,22 +30,13 @@ contract ApprovalWorkflow {
 
     event BidApproved(uint256 indexed rfpId, address indexed vendor);
     event BidRejected(uint256 indexed rfpId, address indexed vendor);
-    event OfficerAddedToWhitelist(address officer);
-    event OfficerRemovedFromWhitelist(address officer);
+    event OfficerAdded(address officer);
+    event OfficerRemoved(address officer);
 
     constructor(address _bidEvaluationContractAddress) {
         bidEvaluationContract = BidEvaluation(_bidEvaluationContractAddress);
-        owner = msg.sender; // Setting the deployer as the owner
-    }
-
-    modifier onlyWhitelisted() {
-        require(whitelist[msg.sender], "Caller is not whitelisted");
-        _;
-    }
-
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Caller is not the owner");
-        _;
+        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender); // Assign the deployer as the default admin
+        _setRoleAdmin(OFFICER_ROLE, DEFAULT_ADMIN_ROLE); // Set DEFAULT_ADMIN_ROLE as the admin for OFFICER_ROLE
     }
 
     modifier notAlreadyApproved(uint256 _rfpId) {
@@ -52,17 +44,17 @@ contract ApprovalWorkflow {
         _;
     }
 
-    function addToWhitelist(address _officer) public onlyOwner {
-        whitelist[_officer] = true;
-        emit OfficerAddedToWhitelist(_officer);
+    function addOfficer(address officer) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        grantRole(OFFICER_ROLE, officer);
+        emit OfficerAdded(officer);
     }
 
-    function removeFromWhitelist(address _officer) public onlyOwner {
-        whitelist[_officer] = false;
-        emit OfficerRemovedFromWhitelist(_officer);
+    function removeOfficer(address officer) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        revokeRole(OFFICER_ROLE, officer);
+        emit OfficerRemoved(officer);
     }
 
-    function approveBid(uint256 _rfpId, address _vendor) public onlyWhitelisted notAlreadyApproved(_rfpId) {
+    function approveBid(uint256 _rfpId, address _vendor) public onlyRole(OFFICER_ROLE) notAlreadyApproved(_rfpId) {
         require(bidEvaluationContract.isWinningBid(_rfpId, _vendor), "Vendor is not the winning bidder");
 
         ApprovalData storage data = approvalData[_rfpId];
@@ -80,7 +72,7 @@ contract ApprovalWorkflow {
         }
     }
 
-    function rejectBid(uint256 _rfpId, address _vendor) public onlyWhitelisted notAlreadyApproved(_rfpId) {
+    function rejectBid(uint256 _rfpId, address _vendor) public onlyRole(OFFICER_ROLE) notAlreadyApproved(_rfpId) {
         require(bidEvaluationContract.isWinningBid(_rfpId, _vendor), "Vendor is not the winning bidder");
 
         ApprovalData storage data = approvalData[_rfpId];
@@ -97,7 +89,7 @@ contract ApprovalWorkflow {
             emit BidRejected(_rfpId, _vendor);
         }
     }
-    // Function to check the approval status of a bid
+
     function getApprovalStatus(uint256 _rfpId) public view returns (ApprovalStatus) {
         return approvals[_rfpId].status;
     }
