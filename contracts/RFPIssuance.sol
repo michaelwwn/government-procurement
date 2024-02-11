@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract RFPIssuance {
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract RFPIssuance is Ownable(msg.sender){
     struct RFP {
         uint256 id;
         string title;
@@ -18,7 +20,7 @@ contract RFPIssuance {
     event RFPDeactivated(uint256 indexed rfpId);
 
     // Function to issue a new RFP
-    function issueRFP(string memory _title, string memory _description, uint256 _deadline) public {
+    function issueRFP(string memory _title, string memory _description, uint256 _deadline) public onlyOwner{
         require(_deadline > block.timestamp, "Deadline should be in the future");
 
         RFP memory newRFP = RFP({
@@ -35,7 +37,7 @@ contract RFPIssuance {
     }
 
     // Function to update an RFP
-    function updateRFP(uint256 _rfpId, string memory _title, string memory _description) public {
+    function updateRFP(uint256 _rfpId, string memory _title, string memory _description) public onlyOwner{
         require(rfps[_rfpId].isActive, "RFP is not active");
         rfps[_rfpId].title = _title;
         rfps[_rfpId].description = _description;
@@ -44,7 +46,7 @@ contract RFPIssuance {
     }
 
     // Function to deactivate an RFP
-    function deactivateRFP(uint256 _rfpId) public {
+    function deactivateRFP(uint256 _rfpId) public onlyOwner{
         require(rfps[_rfpId].isActive, "RFP is already inactive");
         rfps[_rfpId].isActive = false;
 
