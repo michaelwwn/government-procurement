@@ -35,7 +35,7 @@ contract ApprovalWorkflow is AccessControl {
 
     constructor(address _bidEvaluationContractAddress) {
         bidEvaluationContract = BidEvaluation(_bidEvaluationContractAddress);
-        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender); // Assign the deployer as the default admin
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender); // Assign the deployer as the default admin
         _setRoleAdmin(OFFICER_ROLE, DEFAULT_ADMIN_ROLE); // Set DEFAULT_ADMIN_ROLE as the admin for OFFICER_ROLE
     }
 
