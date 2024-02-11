@@ -59,4 +59,52 @@ contract BidEvaluation {
     function isWinningBid(uint256 _rfpId, address _vendor) public view returns (bool) {
         return winningBids[_rfpId] == _vendor;
     }
+
+    function splitBidDetails(string memory bidDetails) internal pure returns (string[] memory) {
+        bytes memory bidDetailsBytes = bytes(bidDetails);
+        uint256 commaCount = 0;
+
+        // Count how many commas are in the string
+        for(uint256 i = 0; i < bidDetailsBytes.length; i++) {
+            if (bidDetailsBytes[i] == ",") {
+                commaCount++;
+            }
+        }
+
+        // There will be commaCount + 1 number of elements in the resulting array
+        string[] memory parts = new string[](commaCount + 1);
+        uint256 partIndex = 0;
+        bytes memory part = "";
+
+        // Split the string by commas
+        for(uint256 i = 0; i < bidDetailsBytes.length; i++) {
+            if (bidDetailsBytes[i] == ",") {
+                parts[partIndex] = string(part);
+                partIndex++;
+                part = "";
+            } else {
+                part = abi.encodePacked(part, bidDetailsBytes[i]);
+            }
+        }
+
+        // Add the last part after the final comma, or the whole string if no commas
+        parts[partIndex] = string(part);
+
+        return parts;
+    }
+
+    // Function to convert string to uint
+    function parseUint(string memory _a) internal pure returns (uint256) {
+        bytes memory bresult = bytes(_a);
+        uint256 mint = 0;
+        for (uint256 i = 0; i < bresult.length; i++) {
+            if ((uint8(bresult[i]) >= 48) && (uint8(bresult[i]) <= 57)) {
+                mint *= 10;
+                mint += uint8(bresult[i]) - 48;
+            } else {
+                break;
+            }
+        }
+        return mint;
+    }
 }
