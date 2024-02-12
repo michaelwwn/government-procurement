@@ -26,3 +26,6 @@ Manages the approval process post-bid evaluation, ensuring that only authorized 
 
 ### `ContractExecution.sol`
 Handles the formalization of the contract with the winning vendor and monitors the progress of the contract, including milestone completions.
+
+## Technical Architecture
+![Sequence Diagram](sequence-diagram.png)
