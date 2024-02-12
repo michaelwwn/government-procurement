@@ -2,8 +2,9 @@
 pragma solidity ^0.8.0;
 
 import "./ApprovalWorkflow.sol"; // Import the ApprovalWorkflow contract
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract ContractExecution {
+contract ContractExecution is ReentrancyGuard{
     ApprovalWorkflow approvalWorkflowContract; // Instance of the ApprovalWorkflow contract
     address public owner;
 
@@ -55,7 +56,7 @@ contract ContractExecution {
     }
 
     // Function to mark a milestone as completed and transfer funds
-    function completeMilestone(uint256 _rfpId) public onlyOwner{
+    function completeMilestone(uint256 _rfpId) public onlyOwner nonReentrant{
         Contract storage contractToUpdate = contracts[_rfpId];
         require(contractToUpdate.isActive, "Contract is not active");
         require(contractToUpdate.milestonesCompleted < contractToUpdate.totalMilestones, "All milestones already completed");
