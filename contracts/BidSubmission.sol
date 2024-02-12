@@ -10,7 +10,9 @@ contract BidSubmission {
     struct Bid {
         uint256 rfpId;
         address vendor;
-        string bidDetails;
+        uint256 price;
+        uint256 qualityScore;
+        uint256 esgScore;
         uint256 timestamp;
         bool isSubmitted;
     }
@@ -26,7 +28,8 @@ contract BidSubmission {
     }
 
     // Function to submit a bid
-    function submitBid(uint256 _rfpId, string memory _bidDetails) public {
+    function submitBid(uint256 _rfpId, uint256 _price, uint256 _qualityScore, uint256 _esgScore) public {
+
         // Ensure the RFP exists and is active
         require(rfpContract.getRFP(_rfpId).isActive, "RFP is not active or does not exist");
         require(block.timestamp <= rfpContract.getRFP(_rfpId).deadline, "The deadline for this RFP has passed");
@@ -37,7 +40,9 @@ contract BidSubmission {
         Bid memory newBid = Bid({
             rfpId: _rfpId,
             vendor: msg.sender,
-            bidDetails: _bidDetails,
+            price: _price,
+            qualityScore: _qualityScore,
+            esgScore: _esgScore,
             timestamp: block.timestamp,
             isSubmitted: true
         });

@@ -26,6 +26,3 @@ Manages the approval process post-bid evaluation, ensuring that only authorized 
 
 ### `ContractExecution.sol`
 Handles the formalization of the contract with the winning vendor and monitors the progress of the contract, including milestone completions.
-
-### `ProcurementMaster.sol`
-Acts as the central coordinator for the procurement system, interfacing with all other contracts to manage the overall procurement process.
