@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "./ApprovalWorkflow.sol"; // Import the ApprovalWorkflow contract
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract ContractExecution {
+contract ContractExecution is ReentrancyGuard{
     ApprovalWorkflow approvalWorkflowContract; // Instance of the ApprovalWorkflow contract
     address public owner;
 
